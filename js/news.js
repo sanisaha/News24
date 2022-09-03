@@ -1,16 +1,20 @@
 
 const loadNews = () => {
     const url = `https://openapi.programming-hero.com/api/news/categories`;
-    fetch(url)
-        .then(res => res.json())
-        .then(data => displayNewsCategory(data.data.news_category))
+    try {
+        fetch(url)
+            .then(res => res.json())
+            .then(data => displayNewsCategory(data.data.news_category))
+    }
+    catch (error) {
+        console.log(error);
+    }
 }
 const displayNewsCategory = categories => {
     const newsCategory = document.getElementById("news-category");
     categories.forEach(category => {
         const newButton = document.createElement("button");
         newButton.classList.add("btn");
-        newButton.classList.add("btn-info");
         newButton.setAttribute("id", `${category.category_id}`);
         newButton.innerText = `${category.category_name}`;
         newButton.onclick = function () {
@@ -33,7 +37,7 @@ const displayDetails = details => {
     } else {
         newsInfo.innerText = `No news available in this section`
     }
-    details.sort((a, b) => a.total_view - b.total_view);
+    details.sort((a, b) => b.total_view - a.total_view);
     const newsList = document.getElementById("news-list");
     newsList.innerHTML = ``;
     details.forEach(detail => {
@@ -49,7 +53,7 @@ const displayDetails = details => {
                             <h5 class="card-title">${detail.title}</h5>
                             <p class="text-ellipsis card-text">${detail.details}</p>
                             <img src = "${detail.author.img}" class="d-inline small rounded-circle"></img>
-                            <p class = "d-inline">${detail.author.name} <span class = "ms-5">${detail.total_view}</span><button href="" onclick = "getDetails('${detail._id}')" type="button" class = "btn btn-primary mx-5" data-bs-toggle="modal" data-bs-target="#exampleModal">more details</button><p>
+                            <p class = "d-inline">${detail.author.name ? detail.author.name : "author name unavailable"} <span class = "ms-5">${detail.total_view ? detail.total_view : "total views unavialable"}</span><button href="" onclick = "getDetails('${detail._id}')" type="button" class = "btn btn-primary mx-5" data-bs-toggle="modal" data-bs-target="#exampleModal">more details</button><p>
                             
                             
                     </div>
@@ -61,9 +65,14 @@ const displayDetails = details => {
 }
 const getDetails = async (news_id) => {
     const url = `https://openapi.programming-hero.com/api/news/${news_id}`
-    const res = await fetch(url);
-    const data = await res.json();
-    displayInfo(data.data[0]);
+    try {
+        const res = await fetch(url);
+        const data = await res.json();
+        displayInfo(data.data[0]);
+    }
+    catch (error) {
+        console.log(error);
+    }
 }
 const displayInfo = news => {
     const newsDetail = document.getElementById("newsDetail");
@@ -73,12 +82,13 @@ const displayInfo = news => {
     const newDiv = document.createElement("div");
     newDiv.innerHTML = `
     <ul>
-    <li>Author Name: ${news.author.name}</li>
-    <li>Total View: ${news.total_view}</li>
+    <li>Author Name: ${news.author.name ? news.author.name : "author name unavailble"}</li>
+    <li>Total View: ${news.total_view ? news.total_view : "total viewer number missing"}</li>
     <li>Rating: ${news.rating.number}</li>
-    <li>Published Date: ${news.published_date}</li>
-    <li>news-image: ${news.thumbnail_url}</li>
+    <li>Published Date: ${news.published_date ? news.published_date : "published date not available"}
+    </li>
     </ul>
+    <img src = "${news.thumbnail_url}"></img>
     `;
     newsDetailContainer.appendChild(newDiv);
 }
