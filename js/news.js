@@ -26,6 +26,13 @@ const displayNewsCategory = categories => {
 loadNews();
 
 const displayDetails = details => {
+    const newsInfo = document.getElementById("itemNumber");
+    newsInfo.innerText = "";
+    if (details.length > 0) {
+        newsInfo.innerText = `${details.length} items have been found in this sesction`
+    } else {
+        newsInfo.innerText = `No news available in this section`
+    }
     details.sort((a, b) => a.total_view - b.total_view);
     const newsList = document.getElementById("news-list");
     newsList.innerHTML = ``;
