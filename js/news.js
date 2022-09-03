@@ -9,6 +9,8 @@ const displayNewsCategory = categories => {
     const newsCategory = document.getElementById("news-category");
     categories.forEach(category => {
         const newButton = document.createElement("button");
+        newButton.classList.add("btn");
+        newButton.classList.add("btn-info");
         newButton.setAttribute("id", `${category.category_id}`);
         newButton.innerText = `${category.category_name}`;
         newButton.onclick = function () {
