@@ -32,7 +32,7 @@ const displayDetails = details => {
         const newDetail = document.createElement("div");
         newDetail.classList.add("card");
         newDetail.innerHTML = `
-        <div class="row g-0">
+        <div class="row">
                     <div class="col-md-4">
                         <img src= "${detail.image_url}" class="img-fluid rounded-start" alt="...">
                     </div>
