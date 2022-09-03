@@ -40,8 +40,10 @@ const displayDetails = details => {
                         <div class="card-body">
                             <h5 class="card-title">${detail.title}</h5>
                             <p class="text-ellipsis card-text">${detail.details}</p>
-                            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                        </div>
+                            <img src = "${detail.author.img}" class="d-inline small rounded-circle"></img>
+                            <p class = "d-inline">${detail.author.name} <span class = "ms-5">${detail.total_view}</span><button class = "mx-5">more</button><p>
+                            
+                            
                     </div>
                 </div>
         `;
