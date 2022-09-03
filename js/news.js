@@ -26,10 +26,10 @@ const displayNewsCategory = categories => {
 loadNews();
 
 const displayDetails = details => {
+    details.sort((a, b) => a.total_view - b.total_view);
     const newsList = document.getElementById("news-list");
     newsList.innerHTML = ``;
     details.forEach(detail => {
-        // console.log(detail);
         const newDetail = document.createElement("div");
         newDetail.classList.add("card");
         newDetail.innerHTML = `
